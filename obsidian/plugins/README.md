@@ -10,6 +10,8 @@
 * pandoc
 * highlightr
 * excalidraw
+* obsidian-linter
+    * with https://github.com/platers/obsidian-linter/blob/master/docs/rules.md#line-break-at-document-end
 
 * obsidian git
 * obsidian livesync
