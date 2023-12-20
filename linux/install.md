@@ -1,7 +1,7 @@
 # Linux Install
 
 https://xkcd.com/538/
-![[xkcd-538.png]]
+![[../assets/xkcd-538.png]]
 These are rough notes written for me, hope it helps somebody.
 
 I'm currently running Arch Linux on my desktop, but this would be applicable to Fedora with a minimal install (somewhat) etc.

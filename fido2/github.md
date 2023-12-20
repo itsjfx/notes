@@ -18,7 +18,7 @@ More discussion here: <https://github.com/orgs/community/discussions/67791>
 
 You can have multiple accounts on a single FIDO2 device!
 
-![[fido2-github-multiple-accounts.png]]
+![[../assets/fido2-github-multiple-accounts.png]]
 
 The GitHub sends a FIDO2 challenge with an empty `allowCredentials` argument
 ```json

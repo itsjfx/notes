@@ -5,7 +5,7 @@
 [FIDO2 is enabled by default and supported in Firefox as of 114.0](https://www.mozilla.org/en-US/firefox/114.0/releasenotes/)
 
 However the Azure login website (at this time, 17 Aug 2023) still does not support FIDO2 on Firefox on Linux as it glitches out.
-![[fido2-azure-ad-failure.png]]
+![[../assets/fido2-azure-ad-failure.png]]
 
 > We couldn't verify you or the key you used. If you are using a security key, make sure this is your key and try again.
 
