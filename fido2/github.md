@@ -18,7 +18,7 @@ More discussion here: <https://github.com/orgs/community/discussions/67791>
 
 You can have multiple accounts on a single FIDO2 device!
 
-![[../assets/fido2-github-multiple-accounts.png]]
+![](../assets/fido2-github-multiple-accounts.png)
 
 The GitHub sends a FIDO2 challenge with an empty `allowCredentials` argument
 ```json
@@ -32,6 +32,8 @@ The GitHub sends a FIDO2 challenge with an empty `allowCredentials` argument
     }
 }
 ```
+
+I got the above following [Monkey patching](Monkey%20patching.md)
 
 See [the webauthn2 spec for more info](https://www.w3.org/TR/webauthn-2/#client-side):
 > The [Relying Party](https://www.w3.org/TR/webauthn-2/#relying-party) invokes [navigator.credentials.get()](https://w3c.github.io/webappsec-credential-management/#dom-credentialscontainer-get) with an empty [allowCredentials](https://www.w3.org/TR/webauthn-2/#dom-publickeycredentialrequestoptions-allowcredentials) argument. This means that the [Relying Party](https://www.w3.org/TR/webauthn-2/#relying-party) does not necessarily need to first identify the user.
