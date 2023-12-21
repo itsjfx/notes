@@ -245,8 +245,8 @@ See the following:
 1. Setup these hooks: `HOOKS=(base systemd autodetect modconf kms keyboard block sd-encrypt filesystems fsck)`
    1. `systemd` `keyboard` `sd-encrypt` are the important ones
    2. Add `sd-vconsole` if using non-default console font/non-US keyboard
-2. I've put `btrfs` in `MODULES`, it can probably go in `HOOKS` after `sd-encrypt`
-   1. `MODULES=(btrfs)`
+2. I've put `btrfs` in `HOOKS`, it can probably go in `HOOKS` after `sd-encrypt` or `keymap` (not sure if it matters)
+   1. `HOOKS=( ... btrfs ... )`
 3. Run `bootctl install`
 4. Re-generate the initramfs via `mkinitcpio -P`
 
