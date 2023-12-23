@@ -8,6 +8,7 @@
 * SSD: Samsung 980 Pro M.2 2TB (Linux) / Samsung 970 EVO Plus 1TB (Windows)
 * PSU: Seasonic Prime Ultra 650W Titanium
 * Case: Fractal Design North Charcoal Black Tempered Glass
+* Case Fans: Noctua NF-A14 PWM
 
 ## Old
 
