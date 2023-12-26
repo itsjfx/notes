@@ -236,8 +236,6 @@ In addition to `/etc/hostname`, make an `/etc/hosts` with the following:
 
 ### systemd-boot and LUKS initramfs
 
-TODO `systemd-boot` updating
-
 See the following:
 * <https://wiki.archlinux.org/title/systemd-boot>
 * <https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system#Configuring_mkinitcpio>
@@ -249,6 +247,11 @@ See the following:
    1. `HOOKS=( ... btrfs ... )`
 3. Run `bootctl install`
 4. Re-generate the initramfs via `mkinitcpio -P`
+
+#### Enable systemd-boot updating on boot
+
+* https://wiki.archlinux.org/title/systemd-boot#systemd_service
+* Run: `sudo systemctl enable systemd-boot-update.service`
 
 #### Edit bootloader config
 
@@ -351,6 +354,15 @@ TODO: read https://wiki.archlinux.org/title/Dual_boot_with_Windows and see if an
 * check fast startup in BIOS
 
 Frozen screen on "Windows Boot Manager"
+
+## Get Windows fonts
+
+Probably needed for some stuff.
+
+See: https://wiki.archlinux.org/title/Microsoft_fonts#Installation
+* Copy from a Windows Install
+* or use the AUR provided package which grabs them from the ISO
+
 ## Snapshots
 
 TODO
