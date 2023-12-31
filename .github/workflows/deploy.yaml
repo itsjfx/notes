@@ -1,0 +1,25 @@
+name: deploy
+on:
+  push:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pipenv'
+
+      - name: install pipenv
+        run: pip3 install pipenv
+
+      - name: install packages
+        run: pipenv install
+
+      - name: push to github pages
+        run: bin/deploy

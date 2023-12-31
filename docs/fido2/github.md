@@ -33,7 +33,7 @@ The GitHub sends a FIDO2 challenge with an empty `allowCredentials` argument
 }
 ```
 
-I got the above following [Monkey patching](../javascript/README#monkey-patching)
+I got the above following [Monkey patching](../javascript/README.md#monkey-patching)
 
 See [the webauthn2 spec for more info](https://www.w3.org/TR/webauthn-2/#client-side):
 > The [Relying Party](https://www.w3.org/TR/webauthn-2/#relying-party) invokes [navigator.credentials.get()](https://w3c.github.io/webappsec-credential-management/#dom-credentialscontainer-get) with an empty [allowCredentials](https://www.w3.org/TR/webauthn-2/#dom-publickeycredentialrequestoptions-allowcredentials) argument. This means that the [Relying Party](https://www.w3.org/TR/webauthn-2/#relying-party) does not necessarily need to first identify the user.
