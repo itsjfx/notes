@@ -6,6 +6,8 @@ site_author: Thomas
 # Repository
 repo_name: itsjfx/notes
 repo_url: https://github.com/itsjfx/notes
+# https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#code-actions
+edit_uri: edit/master/docs/
 
 # Copyright
 copyright: Copyright &copy; 2022 - 2023 Thomas
@@ -35,6 +37,13 @@ theme:
   features:
     # https://squidfunk.github.io/mkdocs-material/setup/setting-up-site-search/#search-suggestions
     - search.suggest
+    # https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#code-actions
+    - content.action.edit
+    - content.action.view
+  icon:
+    # https://squidfunk.github.io/mkdocs-material/setup/adding-a-git-repository/#code-actions
+    edit: material/pencil
+    view: material/eye
 
 markdown_extensions:
   # https://squidfunk.github.io/mkdocs-material/reference/lists
