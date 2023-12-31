@@ -1,6 +1,10 @@
 name: deploy
+
 on:
   push:
+
+permissions:
+  contents: write
 
 jobs:
   deploy:
