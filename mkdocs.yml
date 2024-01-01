@@ -16,6 +16,7 @@ theme:
   # https://squidfunk.github.io/mkdocs-material/customization/?h=override#setup-and-theme-structure
   custom_dir: overrides
   # https://squidfunk.github.io/mkdocs-material/setup/changing-the-colors/#automatic-light-dark-mode
+  favicon: favicon.ico
   palette:
     # Palette toggle for automatic mode
     - media: "(prefers-color-scheme)"
@@ -49,7 +50,9 @@ theme:
 
 markdown_extensions:
   # https://squidfunk.github.io/mkdocs-material/reference/lists
-  - def_list
+  - mdx_breakless_lists
+  - toc:
+      permalink: true
   - pymdownx.tasklist:
       custom_checkbox: true
 

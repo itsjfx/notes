@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4d648d69b0a793eafef50508909a80d4894398b09703a4c38def4ca4e848e9c3"
+            "sha256": "746bca2d6884ffcb3fd033a4e6c9793c6f4d54b84dac196fdb170f71f8e4a99a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -258,6 +258,14 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==2.1.3"
+        },
+        "mdx-breakless-lists": {
+            "hashes": [
+                "sha256:2ec7978048673ad7cb8042b5787420a9d252053908dcb3418708cf2f91a6a538",
+                "sha256:d49209a42561142b1dacea6821a3899a8ccd17a45da5e7e04294aa23d98d76c8"
+            ],
+            "index": "pypi",
+            "version": "==1.0.1"
         },
         "mergedeep": {
             "hashes": [
