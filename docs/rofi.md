@@ -26,3 +26,7 @@ For a real example see:
 * https://github.com/itsjfx/dotfiles/blob/master/scripts/rofi/power-menu.sh
     * ![](./assets/rofi-power-menu-snippet.png)
 * https://github.com/itsjfx/dotfiles/blob/master/scripts/rofi/firefox.sh
+
+## Saving an application for search
+
+See [saving-websites-as-apps](saving-websites-as-apps.md)
