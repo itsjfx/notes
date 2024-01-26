@@ -4,4 +4,4 @@ set -eu -o pipefail
 
 cd "$(dirname "$0")"/../
 
-pipenv run -- mkdocs serve
+pipenv run -- mkdocs serve "$@"

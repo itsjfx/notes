@@ -4,4 +4,4 @@ set -eu -o pipefail
 
 cd "$(dirname "$0")"/../
 
-pipenv run -- mkdocs gh-deploy --no-history
+pipenv run -- mkdocs gh-deploy --no-history "$@"
