@@ -81,25 +81,27 @@ Based on:
 2. Delete existing partitions (use `d`) ? I think 3. handles this
 3. Type `g` to create a `GPT` drive
 4. Make EFI partition
-   1. Press `n`
-   2. Partition type: Primary
-   3. Partition number: 1
-   4. First sector: continue
-   5. Last sector: `+512M`
-   6. Press `t` to change the type, press `L` to list types
-   7. Select the type for `EFI System`
-      1. The types seem to differ per motherboard (?), so double check
-   8. Don't worry about making/marking as bootable
+    1. Press `n`
+    2. Partition type: Primary
+    3. Partition number: 1
+    4. First sector: continue
+    5. Last sector: `+512M`
+    6. Press `t` to change the type, press `L` to list types
+    7. Select the type for `EFI System`
+        1. The types seem to differ per motherboard (?), so double check
+    8. Don't worry about making/marking as bootable
 5. Make primary partition
-   1. Press `n`
-   2. Partition type: Primary
-   3. Partition number: 2
-   4. First sector: continue
-   5. Last sector: continue
-   6. Press `t` to change the type, press `L` to list types
-   7. Select the type for `Linux filesystem`
-      1. The types seem to differ per motherboard (?), so double check
-6. Press `w` to write to the drive
+    1. Press `n`
+    2. Partition type: Primary
+    3. Partition number: 2
+    4. First sector: continue
+    5. Last sector: continue
+    6. Press `t` to change the type, press `L` to list types
+    7. Select the type for `Linux filesystem`
+        1. The types seem to differ per motherboard (?), so double check
+6. Type `p` to list the paritions and double check
+    1. Validate (see Validate drives below)
+7. Type `w` to write to the drive
 
 #### Validate drives
 
@@ -123,6 +125,10 @@ Device           Start        End    Sectors  Size Type
 /dev/nvme1n1p1    2048    1050623    1048576  512M EFI System
 /dev/nvme1n1p2 1050624 3907028991 3905978368  1.8T Linux filesystem
 ```
+
+#### Format boot partition
+
+`mkfs.fat -F 32 /dev/BOOT_PARTITION`
 
 #### Setup LUKS & btrfs
 
