@@ -35,15 +35,9 @@ Based off:
 
 ## TODO
 
-* zram and swap file? or just swap file and zswap?
-* swap in general
-* suspend to disk
 * snapshots and restore
 * dual boot with Windows working properly
-* systemd command aliases in rofi
-  * `systemctl reboot --firmware-setup`
-  * `systemctl reboot --boot-loader-entry=x.conf`
-* systemd boot updating
+    * `systemctl reboot --boot-loader-entry=x.conf`
 
 ## Arch Installation
 
@@ -160,6 +154,7 @@ btrfs subvolume create _active
 btrfs subvolume create _active/rootvol
 btrfs subvolume create _active/homevol
 btrfs subvolume create _snapshots
+btrfs subvolume create _swap
 ```
 
 ##### Mount them
@@ -175,12 +170,16 @@ mkdir /mnt/{home,boot,btrfs_root}
 mount -o fmask=0137,dmask=0027 /dev/BOOT_PARTITION /mnt/boot
 mount -o subvol=_active/homevol,compress=zstd:1,discard=async /dev/mapper/root /mnt/home
 mount -o subvol=/,compress=zstd:1,discard=async /dev/mapper/root /mnt/btrfs_root
+mount -o subvol=_swap,discard=async /dev/mapper/root /mnt/swap
 ```
 
 ##### Swap File
 
-TODO
-need to exclude from COW
+1. Follow https://wiki.archlinux.org/title/btrfs#Swap_file
+    1. Create in the `_swap` subvolume
+2. Set the swap size to RAM size for hibrenation
+
+Swap files generated with `btrfs` are excluded from COW
 
 ### Installation/Select the mirrors
 
@@ -197,7 +196,7 @@ reflector -c "AU" --save /etc/pacman.d/mirrorlist
 * Where `CPU_MICROCODE` is `intel-ucode` or `amd-ucode` or `whatever else`
 
 ```
-pacstrap -K /mnt base linux linux-firmware neovim networkmanager dhclient sudo CPU_MICROCODE
+pacstrap -K /mnt base linux linux-firmware neovim networkmanager dhclient sudo chrony CPU_MICROCODE
 ```
 
 ### Configure the system/Fstab
@@ -284,6 +283,9 @@ TODO modify options correctly
 * **Make sure that your `initrd CPU_MICROCODE` is BEFORE `initrd initramfs-linux.img` otherwise you'll get a failure**
 * Where UUID is your UUID of your root partition
   * You can use `:read ! blkid /dev/ROOT_PARTITION` in `vim` to get it, or the same command in a terminal and type it out
+* Add `resume` and `resume_offset` for suspend to disk
+    * `resume_offset=x`
+    * where `x` is https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Hibernation_into_swap_file
 
 ```
 title Arch Linux
@@ -291,7 +293,7 @@ sort-key 01
 linux /vmlinuz-linux
 initrd /CPU_MICROCODE.img
 initrd /initramfs-linux.img
-options rd.luks.name=UUID=root root=/dev/mapper/root rootflags=subvol=_active/rootvol rds.luks.options=discard rw quiet splash
+options rd.luks.name=UUID=root root=/dev/mapper/root rootflags=subvol=_active/rootvol rds.luks.options=discard resume=/dev/mapper/root resume_offset=x rw quiet splash
 ```
 
 #### Repeat above for fallback-initramfs
@@ -302,11 +304,31 @@ Same config, but reference `/initramfs-fallback` instead
 
 Don't forget to do this
 
+### Clock sync
+
+Using `chrony` as `systemd-timesyncd` does not support NTS
+
+1. Edit `/etc/chrony.conf` and replace the Arch pool server with the Cloudflare NTS one:
+    * `server time.cloudflare.com iburst nts`
+    * https://wiki.archlinux.org/title/Chrony#Using_NTS_servers
+2. Run `sudo chronyc -a makestep` to force a sync
+
 ### Reboot
 
 Reboot and that's the end of the Arch Installation
 
-## Reboot and run bootstrap
+
+## Bootstrap & User setup
+
+### Allow wheel group in sudoers
+
+### Create a user account
+
+1. Create user
+2. Add to wheel group
+3. Test sudo
+
+### Run bootstrap as user
 
 Other people: please don't use this script
 
@@ -317,7 +339,7 @@ curl -fL https://raw.githubusercontent.com/itsjfx/dotfiles/master/scripts/bootst
 bash run_bootstrap.sh 
 ```
 
-## Copy root files
+### Copy root files
 
 Copy the root files `~/.root-files/` over as they will setup X11 and part of the NVIDIA stuff below correctly
 
