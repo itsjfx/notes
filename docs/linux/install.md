@@ -41,7 +41,8 @@ Based off:
 
 ## Arch Installation
 
-Follow the [Arch Installation Guide](https://wiki.archlinux.org/index.php/Installation_guide), check here for steps changes
+* Disable the PC speaker (depending on PC, this is annoying): `rmmod pcspkrZZZZ`
+* Follow the [Arch Installation Guide](https://wiki.archlinux.org/index.php/Installation_guide), check here for steps changes
 
 ### Pre-installation/Set the console keyboard layout and font
 
@@ -311,7 +312,8 @@ Using `chrony` as `systemd-timesyncd` does not support NTS
 1. Edit `/etc/chrony.conf` and replace the Arch pool server with the Cloudflare NTS one:
     * `server time.cloudflare.com iburst nts`
     * https://wiki.archlinux.org/title/Chrony#Using_NTS_servers
-2. Run `sudo chronyc -a makestep` to force a sync
+2. `systemctl enable --now chronyd`
+3. Run `sudo chronyc -a makestep` to force a sync
 
 ### Reboot
 
