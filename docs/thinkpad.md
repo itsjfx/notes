@@ -14,3 +14,4 @@
 * 32 GB RAM (non-upgradeable)
 * 4G/LTE
 * WiFi 5
+* <https://psref.lenovo.com/syspool/Sys/PDF/ThinkPad/ThinkPad_T490s/ThinkPad_T490s_Spec.PDF>
