@@ -189,7 +189,7 @@ These get copied, so set them up properly now
 ```
 pacman -Syy
 pacman -S reflector
-reflector -c "AU" --save /etc/pacman.d/mirrorlist
+reflector -c AU -f 10 --save /etc/pacman.d/mirrorlist
 ```
 
 ### Installation/Install essential packages
