@@ -1,6 +1,6 @@
 # Linux Install
 
-https://xkcd.com/538/
+<https://xkcd.com/538/>
 
 ![](../assets/xkcd-538.png)
 
@@ -26,12 +26,12 @@ I wanted my Linux install to have these things:
 	* <https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system#LUKS_on_a_partition_with_TPM2_and_Secure_Boot>
 
 Based off:
-* https://wiki.archlinux.org/title/installation_guide
-* https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system#LUKS_on_a_partition
-* https://itsfoss.com/install-arch-linux/
-* https://github.com/egara/arch-btrfs-installation
-* https://fogelholk.io/installing-arch-with-lvm-on-luks-and-btrfs/
-* https://gist.github.com/OdinsPlasmaRifle/e16700b83624ff44316f87d9cdbb5c94
+* <https://wiki.archlinux.org/title/installation_guide>
+* <https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system#LUKS_on_a_partition>
+* <https://itsfoss.com/install-arch-linux/>
+* <https://github.com/egara/arch-btrfs-installation>
+* <https://fogelholk.io/installing-arch-with-lvm-on-luks-and-btrfs/>
+* <https://gist.github.com/OdinsPlasmaRifle/e16700b83624ff44316f87d9cdbb5c94>
 
 ## TODO
 
@@ -176,7 +176,7 @@ mount -o subvol=_swap,discard=async /dev/mapper/root /mnt/swap
 
 ##### Swap File
 
-1. Follow https://wiki.archlinux.org/title/btrfs#Swap_file
+1. Follow <https://wiki.archlinux.org/title/btrfs#Swap_file>
     1. Create in the `_swap` subvolume
 2. Set the swap size to RAM size for hibrenation
 
@@ -222,6 +222,8 @@ UUID=x	/home     	btrfs     	rw,relatime,compress=zstd:1,ssd,discard=async,space
 
 # /dev/mapper/root LABEL=arch
 UUID=x	/btrfs_root	btrfs     	rw,relatime,compress=zstd:1,ssd,discard=async,space_cache=v2,subvol=/	0 0
+
+/swap/swapfile          none            swap            defaults        0 0
 ```
 
 ### Configure the system/Localization
@@ -256,7 +258,7 @@ See the following:
 
 #### Enable systemd-boot updating on boot
 
-* https://wiki.archlinux.org/title/systemd-boot#systemd_service
+* <https://wiki.archlinux.org/title/systemd-boot#systemd_service>
 * Run: `sudo systemctl enable systemd-boot-update.service`
 
 #### Edit bootloader config
@@ -273,8 +275,6 @@ editor no
 
 #### Add a loader for arch
 
-TODO modify options correctly
-
 * Edit `esp/loader/entries/arch.conf`
 * Where `CPU_MICROCODE` is `intel-ucode` or `amd-ucode` or `whatever else`
 * **Validate the below files are in the `/boot` folder, if not then do the below**
@@ -286,7 +286,8 @@ TODO modify options correctly
   * You can use `:read ! blkid /dev/ROOT_PARTITION` in `vim` to get it, or the same command in a terminal and type it out
 * Add `resume` and `resume_offset` for suspend to disk
     * `resume_offset=x`
-    * where `x` is https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Hibernation_into_swap_file
+    * where `x` is from <https://wiki.archlinux.org/title/Power_management/Suspend_and_hibernate#Acquire_swap_file_offset> for BTRFS
+        * `btrfs inspect-internal map-swapfile -r /swap/swapfile`
 
 ```
 title Arch Linux
@@ -311,14 +312,13 @@ Using `chrony` as `systemd-timesyncd` does not support NTS
 
 1. Edit `/etc/chrony.conf` and replace the Arch pool server with the Cloudflare NTS one:
     * `server time.cloudflare.com iburst nts`
-    * https://wiki.archlinux.org/title/Chrony#Using_NTS_servers
+    * <https://wiki.archlinux.org/title/Chrony#Using_NTS_servers>
 2. `systemctl enable --now chronyd`
 3. Run `sudo chronyc -a makestep` to force a sync
 
 ### Reboot
 
 Reboot and that's the end of the Arch Installation
-
 
 ## Bootstrap & User setup
 
@@ -353,7 +353,7 @@ After installing NVIDIA drivers from bootstrap there's a couple of things needed
 
 #### Remove nouveau/kms from mkinitcpio
 
-I'm not sure if this is needed if you _don't_ install `nouveau` but listed here https://wiki.archlinux.org/title/NVIDIA#Installation
+I'm not sure if this is needed if you _don't_ install `nouveau` but listed here <https://wiki.archlinux.org/title/NVIDIA#Installation>
 
 Remove `kms` from `mkinitcpio.conf` and regenerate the initramfs
 
@@ -366,30 +366,33 @@ Remove `kms` from `mkinitcpio.conf` and regenerate the initramfs
         * `cat /sys/module/nvidia_drm/parameters/modeset` and `fbdev` should return `Y`
 * [1.3.1.1 mkinitcpio](https://wiki.archlinux.org/title/NVIDIA#mkinitcpio) Add early loading to the kernel
     * Follow these steps
-    * https://wiki.archlinux.org/title/Kernel_mode_setting#mkinitcpio
+    * <https://wiki.archlinux.org/title/Kernel_mode_setting#mkinitcpio>
     * Add `MODULES=(... nvidia nvidia_modeset nvidia_uvm nvidia_drm ...)` to the `mkinitcpio.conf`
     * Re-generate the initramfs
 * [1.3.1.3 pacman hook](https://wiki.archlinux.org/title/NVIDIA#pacman_hook) pacman hook
     * Should be done in `~/.root-files/etc/pacman.d/hooks/nvidia.hook`
 
 `sudo sysfsutils | less` you should see multiple entries from `nvidia` from earlier
+
 ## Setup Windows dual boot
 
 I couldn't get this working:
-* https://forum.endeavouros.com/t/tutorial-add-a-systemd-boot-loader-menu-entry-for-a-windows-installation-using-a-separate-esp-partition/37431
-* https://wiki.archlinux.org/title/systemd-boot#Boot_from_another_disk
+* <https://forum.endeavouros.com/t/tutorial-add-a-systemd-boot-loader-menu-entry-for-a-windows-installation-using-a-separate-esp-partition/37431>
 
-TODO: read https://wiki.archlinux.org/title/Dual_boot_with_Windows and see if any of the tips help. Seems like good prereading.
-* check fast shutdown in Windows
-* check fast startup in BIOS
-
-Frozen screen on "Windows Boot Manager"
+I followed this again and it worked:
+* <https://wiki.archlinux.org/title/systemd-boot#Boot_from_another_disk>
+1. Get the UEFI shell working: <https://wiki.archlinux.org/title/Systemd-boot#UEFI_Shells_or_other_EFI_applications>
+2. In the UEFI shell, run `map` to list the partitions
+3. Run `ls FS0:...` and figure out which one is the Windows EFI partition
+4. Confirm the `bootmgfw.efi` file exists by using `ls FSX:EFI\Microsoft\Boot\bootmgfw.efi`
+5. I made mine lowercase as it's the correct casing, not sure if its case sensitive
+6. I also added `sort-key 02` to my entry to put it below Arch
 
 ## Get Windows fonts
 
 Probably needed for some stuff.
 
-See: https://wiki.archlinux.org/title/Microsoft_fonts#Installation
+See: <https://wiki.archlinux.org/title/Microsoft_fonts#Installation>
 * Copy from a Windows Install
 * or use the AUR provided package which grabs them from the ISO
 
