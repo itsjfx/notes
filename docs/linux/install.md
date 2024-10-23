@@ -21,7 +21,7 @@ I wanted my Linux install to have these things:
 	* see xkcd
 * no LVM
 	* similar to <https://fedoraproject.org/wiki/Changes/BtrfsByDefault#Detailed_Description>
-* dual boot with Windows (not working !!!!!)
+* dual boot with Windows
 * secure boot (not done right now)
 	* <https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system#LUKS_on_a_partition_with_TPM2_and_Secure_Boot>
 
