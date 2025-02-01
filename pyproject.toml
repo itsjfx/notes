@@ -1,0 +1,17 @@
+[project]
+name = "public"
+version = "0.1.0"
+description = "me public notes"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "mkdocs",
+    "mkdocs-material",
+    "mkdocs-minify-plugin",
+    "mdx-breakless-lists",
+]
+
+[dependency-groups]
+dev = []
+
+[tool.uv.sources]

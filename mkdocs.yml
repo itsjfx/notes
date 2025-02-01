@@ -10,7 +10,7 @@ repo_url: https://github.com/itsjfx/notes
 edit_uri: edit/master/docs/
 
 # Copyright
-copyright: Copyright &copy; 2022 - 2023 Thomas
+copyright: Copyright &copy; 2022 - 2025 Thomas
 theme:
   name: material
   # https://squidfunk.github.io/mkdocs-material/customization/?h=override#setup-and-theme-structure

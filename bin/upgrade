@@ -4,4 +4,4 @@ set -eu -o pipefail
 
 cd "$(dirname "$0")"/../
 
-uv run mkdocs gh-deploy --no-history "$@"
+uv sync --refresh -U

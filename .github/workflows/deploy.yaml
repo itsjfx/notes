@@ -13,17 +13,19 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
 
+      - name: setup uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: uv.lock
+
       - name: setup python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-          cache: 'pipenv'
+          python-version-file: ".python-version"
 
-      - name: install pipenv
-        run: pip3 install pipenv
-
-      - name: install packages
-        run: pipenv install
+      - name: install
+        run: uv sync --all-extras --dev
 
       - name: push to github pages
         run: bin/deploy
