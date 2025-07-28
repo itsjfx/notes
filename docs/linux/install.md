@@ -35,9 +35,7 @@ Based off:
 
 ## TODO
 
-* snapshots and restore
-* dual boot with Windows working properly
-    * `systemctl reboot --boot-loader-entry=x.conf`
+* BTRFS snapshots and restore
 
 ## Arch Installation
 
@@ -248,13 +246,33 @@ See the following:
 * <https://wiki.archlinux.org/title/systemd-boot>
 * <https://wiki.archlinux.org/title/dm-crypt/Encrypting_an_entire_system#Configuring_mkinitcpio>
 
-1. Setup these hooks: `HOOKS=(base systemd autodetect modconf kms keyboard block sd-encrypt filesystems fsck)`
+1. Setup these hooks: `HOOKS=(base systemd autodetect modconf kms keyboard sd-vconsole block sd-encrypt filesystems fsck)`
    1. `systemd` `keyboard` `sd-encrypt` are the important ones
    2. Add `sd-vconsole` if using non-default console font/non-US keyboard
+   3. Remove `kms` if NVIDIA
 2. I've put `btrfs` in `HOOKS`, it can probably go in `HOOKS` after `sd-encrypt` or `keymap` (not sure if it matters)
    1. `HOOKS=( ... btrfs ... )`
 3. Run `bootctl install`
 4. Re-generate the initramfs via `mkinitcpio -P`
+
+sandcastle: `HOOKS=(base systemd autodetect modconf keyboard sd-vconsole sd-network btrfs block sd-dropbear sd-encrypt filesystems fsck)`
+
+#### SSH server for remote LUKS decrypt
+
+1. Follow https://wiki.archlinux.org/title/Dm-crypt/Specialties#systemd_based_initramfs_(built_with_mkinitcpio)
+2. Install <https://aur.archlinux.org/packages/mkinitcpio-systemd-extras>
+3. `sudo mkdir -p /etc/luks-remote-decrypt -m 700`
+4. See root files for examples of configs, add public ssh key to `/etc/luks-remote-decrypt/root_key`
+5. If using DHCP, make sure the DHCP server does not bind to client ID, as it will differ in the initramFS
+
+In the `mkinitcpio` file
+
+```
+HOOKS=(base systemd autodetect modconf keyboard sd-vconsole sd-network btrfs block sd-dropbear sd-encrypt filesystems fsck)
+SD_DROPBEAR_COMMAND="systemd-tty-ask-password-agent --query --watch"
+SD_DROPBEAR_AUTHORIZED_KEYS="/etc/luks-remote-decrypt/root_key"
+SD_NETWORK_CONFIG="/etc/luks-remote-decrypt/systemd-networkd"
+```
 
 #### Enable systemd-boot updating on boot
 
@@ -387,6 +405,13 @@ I followed this again and it worked:
 4. Confirm the `bootmgfw.efi` file exists by using `ls FSX:EFI\Microsoft\Boot\bootmgfw.efi`
 5. I made mine lowercase as it's the correct casing, not sure if its case sensitive
 6. I also added `sort-key 02` to my entry to put it below Arch
+
+```
+title Windows
+sort-key 02
+efi /shellx64.efi
+options -nointerrupt -nomap -noversion HD0b:EFI\Microsoft\Boot\bootmgfw.efi
+```
 
 ## Get Windows fonts
 
