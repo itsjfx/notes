@@ -261,7 +261,8 @@ sandcastle: `HOOKS=(base systemd autodetect modconf keyboard sd-vconsole sd-netw
 
 1. Follow https://wiki.archlinux.org/title/Dm-crypt/Specialties#systemd_based_initramfs_(built_with_mkinitcpio)
 2. Install <https://aur.archlinux.org/packages/mkinitcpio-systemd-extras>
-3. `sudo mkdir -p /etc/luks-remote-decrypt -m 700`
+3. `sudo mkdir -p /etc/luks-remote-decrypt -m 755`
+    1. contents needs to be world readable otherwise it fails
 4. See root files for examples of configs, add public ssh key to `/etc/luks-remote-decrypt/root_key`
 5. If using DHCP, make sure the DHCP server does not bind to client ID, as it will differ in the initramFS
 
@@ -273,6 +274,28 @@ SD_DROPBEAR_COMMAND="systemd-tty-ask-password-agent --query --watch"
 SD_DROPBEAR_AUTHORIZED_KEYS="/etc/luks-remote-decrypt/root_key"
 SD_NETWORK_CONFIG="/etc/luks-remote-decrypt/systemd-networkd"
 ```
+
+See in `.root_files`: https://github.com/itsjfx/dotfiles/tree/master/.root-files/etc/luks-remote-decrypt
+
+Check perms:
+```bash
+chmod 755 /etc/luks-remote-decrypt/
+chmod 644 /etc/luks-remote-decrypt/root_key
+chmod 755 /etc/luks-remote-decrypt/systemd-networkd
+chmod 644 /etc/luks-remote-decrypt/systemd-networkd/89-ethernet.network
+```
+
+#### Wake on LAN
+
+* https://wiki.archlinux.org/title/Wake-on-LAN
+
+```bash
+nmcli c modify "Wired connection 1" 802-3-ethernet.wake-on-lan magic
+nmcli c show "wired1" | grep 802-3-ethernet.wake-on-lan
+```
+
+Not sure if this persists, so enable the systemd unit in root files too
+`sudo systemctl enable wol@enp14s0.service`
 
 #### Enable systemd-boot updating on boot
 
